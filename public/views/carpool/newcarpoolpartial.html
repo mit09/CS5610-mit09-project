@@ -1,0 +1,47 @@
+﻿<div class="container" ng-init="initalize()">
+
+    Source: {{source}}<br />
+    Destination: {{destination}}<br />
+    URL: {{url}} <br />
+    Type: {{type}}<br />
+    Cost: {{cost}} <br />
+    Number of Passenger: {{numberOfPassengers}} <br />
+    Memo: {{memo}} <br />
+    <br />
+
+
+    <label for="username" class="sr-only">Username</label>
+    <span class="form-control" style="background-color:lightgrey">{{currentUser.username}}</span>
+    <br />
+    <input type="text" class="form-control" name="source" ng-model="carpool.source" value="source" googleplace="" placeholder="Enter the source location"><br />
+    <input type="text" class="form-control" name="destination" ng-model="carpool.destination" value="destination" googleplace="" placeholder="Enter the destination location"><br />
+
+
+    <input type="radio" name="typeCarpool" ng-model="carpool.type" value="need" />Need
+    <input type="radio" name="typeCarpool" ng-model="carpool.type" value="available" />Available<br />
+
+    <div class="input-group">
+        <span class="input-group-addon">$</span>
+        <input type="text" class="form-control" aria-label="Cost" ng-model="carpool.cost" placeholder="Cost per person">
+        <span class="input-group-addon">.00</span>
+    </div>
+    <br />
+
+    <select class="form-control" id="sel1" ng-model="carpool.numberOfPassenger">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+    </select>
+    <br />
+    <textarea class="form-control" rows="5" id="memo" placeholder="Enter additional details" ng-model="carpool.memo"></textarea>
+    <br />
+
+
+    <button ng-disabled="!currentUser" class="btn btn-success" ng-click="addCarpool(carpool)">Add to carpool</button><br />
+    <br />
+    <iframe width="600"
+            height="450"
+            frameborder="0" style="border:0"
+            ng-src="{{mapurl}}" ng-show="mapurl"></iframe>
+</div>

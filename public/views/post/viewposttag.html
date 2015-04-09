@@ -1,0 +1,21 @@
+﻿<div ng-init="initialize()">
+    <h2>{{tagDetails.hashtag}}</h2>
+    <button ng-hide="isFav" ng-click="fav()">Add to Favorite</button>
+    <button ng-show="isFav" ng-click="unfav()">Remove as Favorite</button>
+    <ul>
+        <li ng-repeat="post in posts">
+            Title:<a href="#/view/post/{{post._id}}">{{post.title}}</a>
+            <p>Content:{{post.content}}</p>
+            <p>PostedBy:{{post.postedBy.username}}</p>
+            <p>Tags:</p>
+            <ol>
+                <li ng-repeat="tag in post.tags">
+                    <a href="#/view/tag/{{tag._id}}">{{tag.hashtag}}</a>
+                </li>
+            </ol>
+            <p>---------------</p>
+
+        </li>
+    </ul>
+    <a href="#/view">View All</a>
+</div>

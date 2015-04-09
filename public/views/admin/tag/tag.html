@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Admin :: Tag Manager</title>
+
+    <script src="../../../javascript/jquery/jquery-1.11.2.min.js"></script>
+    <script src="../../../javascript/bootstrap/bootstrap.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../../css/bootstrap/bootstrap.min.css" />
+
+    <script src="../../../javascript/angular/angular.min.js"></script>
+    <script src="../../../javascript/angular/angular-route.min.js"></script>
+
+    <script src="TagController.js"></script>
+    
+    </head>
+    <body ng-app="TagApp">
+        <div class="container">
+            <h1 class="text-center">Tag Manager</h1>
+
+            <div ng-controller="TagController" ng-init="getTag()">
+                <table class="table table-responsive">
+
+                    <colgroup>
+                        <col style="width:40%" />
+                        <col style="width:40%" />
+                        <col style="width:10%" />
+                        <col style="width:10%" />
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <td><h3>Hashtag</h3></td>
+                            <td><h3>Creation Time</h3></td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <input id="hashtag" name="hashtag" class="form-control" ng-model="tag.hashtag" placeholder="hashtag"  />
+                            </td>
+                            <td>
+                                <span class="form-control" style="background-color:lightgrey" ng-show="selectedIndex||selectedIndex==0">{{tag.creationDateTime | date:'medium'}}</span>
+                            </td>       
+                            
+                            <td>          
+                                <button class="btn btn-info" ng-click="clear()" ng-show="tag.hashtag">
+                                    <span class="glyphicon glyphicon-repeat"></span> Clear
+                                </button>    
+                            </td>
+                            <td>
+                                <button class="btn btn-success" ng-click="addTag(tag)" ng-show="! (selectedIndex || selectedIndex==0)" ng-disabled="!tag || form.$invalid">
+                                    <span class="glyphicon glyphicon-ok-sign"></span> Add Tags
+                                </button>
+                                <button class="btn btn-warning" ng-click="updateTag(tag)" ng-show="selectedIndex||selectedIndex==0">
+                                    <span class="glyphicon glyphicon-upload"></span> Update Tags
+                                </button>
+                            </td>
+                        </tr>
+                        <tr ng-repeat="tag in tags">
+                            <td>{{tag.hashtag}}</td>
+                            <td><span>{{tag.creationDateTime | date:'medium'}}</span></td>
+                            <td> 
+                                <button ng-click="delete(tag._id)" class="btn btn-danger center-block">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </button>
+                            </td>
+                            <td>
+                                <button ng-click="edit(tag._id)" class="btn btn-warning center-block">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

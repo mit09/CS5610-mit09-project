@@ -1,0 +1,40 @@
+﻿<html>
+<head>
+    <title>Google Map</title>
+    
+    <script src="../javascript/angular/lib/angular.min.js"></script>
+    <script src="../javascript/angular/lib/angular-route.min.js"></script>
+
+    <script src="../javascript/external/googlemap/lodash.min.js"></script>
+    <script src="../javascript/external/googlemap/angular-google-maps.min.js"></script>
+    
+
+
+
+    <script src="../javascript/angular/controller/TestController.js"></script>
+
+</head>
+<body>
+    <div ng-app="TestApp">
+        <div ng-controller="someController">
+            
+               
+                {{hello}}
+            <iframe src='https://www.google.com/maps/dir/226+Causeway+St,+Boston,+MA+02114,+USA/75+St+Alphonsus+St,+Boston,+MA+02120/@42.3495643,-71.0998658,14z/data=!3m1!4b1!4m13!4m12!1m5!1m1!1s0x89e3708dd899eb7b:0xc777495c724a9a0d!2m2!1d-71.0592079!2d42.3668151!1m5!1m1!1s0x89e379890fad9993:0x9ec1986caed69340!2m2!1d-71.1009222!2d42.3343843' width="600" height="450" frameborder="0" style="border:0"></iframe>
+            
+
+        </div>
+        <!--    <ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map>-->
+        <!--<form action='http://maps.google.com/maps' method='get' target='_blank'>
+            Enter your starting address:
+            <input type='text' name='saddr' /><br />
+            Enter your destination address:<input type='text' name='daddr' />
+            <input type='submit' value='get directions' />
+        </form>
+            -->
+        
+    </div>
+    
+</body>
+
+</html>

@@ -1,0 +1,33 @@
+﻿<div ng-init="initialize()" class="container">
+        
+
+    <h3 ng-show="post.type == 'need'">Need a Carpool</h3>
+    <h3 ng-show="post.type == 'available'">Require a Carpool</h3>
+    <p>Destiantion:{{post.destination}}</p>
+    <p>Source: {{post.source}}</p>
+    <div>
+        <iframe width="600"
+                height="450"
+                frameborder="0" style="border:0"
+                ng-src="{{mapurl}}" ng-show="mapurl">
+        </iframe>
+
+    </div>
+    <p>Posted By:<a href="#/view/user/{{post.postedBy._id}}">{{post.postedBy.username}}</a></p>
+    <p>Cost: ${{post.cost}}</p>
+    <p>Number of Passengers: {{post.numberOfPassenger}}</p>
+    <p>Other details: {{post.memo}}</p>
+    
+    <p>Comments:</p>
+    <ul>
+        <li ng-repeat="c in post.comments">
+            {{c.comment}} by <a href="#/view/user/{{c.commentedBy._id}}">{{c.commentedBy.username}}</a>
+        </li>
+    </ul>
+    <textarea ng-disabled="!currentUser || post.isClose" id="post" class="form-control" ng-model="newcomment.comment" placeholder="Add a comment"></textarea>
+    <button ng-hide="!currentUser || post.isClose" ng-click="addComment(newcomment)">Add comment</button>
+    <br />
+    <button ng-show="post.postedBy._id === currentUser._id && !post.isClose"  ng-click="close()">Close</button>
+    <button ng-show="post.postedBy._id === currentUser._id" ng-click="deletePost()">Delete</button>
+    <p>---------------</p>
+</div>

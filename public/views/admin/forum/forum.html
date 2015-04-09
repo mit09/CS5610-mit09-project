@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Admin :: Forum Manager</title>
+
+    <script src="../../../javascript/jquery/jquery-1.11.2.min.js"></script>
+    <script src="../../../javascript/bootstrap/bootstrap.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../../css/bootstrap/bootstrap.min.css" />
+
+    <script src="../../../javascript/angular/angular.min.js"></script>
+    <script src="../../../javascript/angular/angular-route.min.js"></script>
+
+    
+    <script src="ForumController.js"></script>
+    
+</head>
+<body ng-app="ForumApp">
+    <div class="container">
+        <h1 class="text-center">Forum Manager</h1>
+
+        
+
+        <div ng-controller="ForumController" ng-init="getForum()">
+            <table class="table table-responsive">
+
+                <colgroup>
+                    <col style="width:40%" />
+                    <col style="width:40%" />
+                    <col style="width:10%" />
+                    <col style="width:10%" />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <td><h3>Forum Name</h3></td>
+                        <td><h3>Creation Time</h3></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <input id="forumName" name="forumName" class="form-control" ng-model="forum.forumName" placeholder="Forum Name" />
+                        </td>
+                        <td>
+                            <span class="form-control" style="background-color:lightgrey" ng-show="selectedIndex||selectedIndex==0">{{forum.creationDateTime | date:'medium'}}</span>
+                        </td>
+                        <td>
+                            <button class="btn btn-info" ng-click="clear()" ng-show="forum.forumName">
+                                <span class="glyphicon glyphicon-repeat"></span> Clear
+                            </button>
+                        </td>
+                        <td>
+                            <button class="btn btn-success" ng-click="addForum(forum)" ng-show="! (selectedIndex || selectedIndex==0)" ng-disabled="!forum || form.$invalid">
+                                <span class="glyphicon glyphicon-ok-sign"></span> Add Forum
+                            </button>
+                            <button class="btn btn-warning" ng-click="updateForum(forum)" ng-show="selectedIndex||selectedIndex==0">
+                                <span class="glyphicon glyphicon-upload"></span> Update Forum
+                            </button>
+                        </td>
+                    </tr>
+                    <tr ng-repeat="forum in forums">
+                        <td>{{forum.forumName}}</td>
+                        <td><span>{{forum.creationDateTime | date:'medium'}}</span></td>
+                        <td>
+                            <button ng-click="delete(forum._id)" class="btn btn-danger center-block">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                        </td>
+                        <td>
+                            <button ng-click="edit(forum._id)" class="btn btn-warning center-block">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

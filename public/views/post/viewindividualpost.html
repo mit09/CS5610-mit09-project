@@ -1,0 +1,23 @@
+﻿<div ng-init="initialize()" class="container">
+    
+    Title:<a href="#/view/post/{{post._id}}">{{post.title}}</a>
+    <p>Content:{{post.content}}</p>
+    <p>Posted By:<a href="#/view/user/{{post.postedBy._id}}">{{post.postedBy.username}}</a></p>
+    <p>Tags:</p>
+    <ol>
+        <li ng-repeat="tag in post.tags">
+            <a href="#/view/tag/{{tag._id}}">{{tag.hashtag}}</a>
+        </li>
+    </ol>
+    <p>Comments:</p>
+    <ul>
+        <li ng-repeat="c in post.comments">
+            {{c.comment}} by <a href="#/view/user/{{c.commentedBy._id}}">{{c.commentedBy.username}}</a>
+        </li>
+    </ul>
+    <textarea ng-disabled="!currentUser" id="post" class="form-control" ng-model="newcomment.comment" placeholder="Add a comment"></textarea>
+    <button ng-show="currentUser" ng-click="addComment(newcomment)">Add comment</button>
+    <br />
+    <button ng-show="post.postedBy._id === currentUser._id" ng-click="deletePost(post._id)">Delete</button>
+    <p>---------------</p>
+</div>

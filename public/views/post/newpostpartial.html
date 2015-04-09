@@ -1,0 +1,35 @@
+﻿<div ng-init="initialize()">
+    <div class="container">
+
+        <h1>Share a new post..</h1>
+
+        <form class="add-post">
+            
+            <label for="title" class="sr-only">Title </label>
+            <input id="title" class="form-control"  ng-model="newpost.title" placeholder="Post title" autofocus required />
+            <br />
+
+            <label for="username" class="sr-only">Username</label>
+            <span class="form-control" style="background-color:lightgrey">{{currentUser.username}}</span>
+            <br />
+
+            <label for="post" class="sr-only">Content </label>
+            <textarea id="post" class="form-control" ng-model="newpost.content" placeholder="Write a post"></textarea>
+            <br />
+
+            <tags-input class="bootstrap"
+                        ng-model="selectedTags"
+                        placeholder="Add a tag"
+                        replace-spaces-with-dashes="false">
+                <auto-complete source="loadTags($query)"
+                               min-length="0"
+                               debounce-delay="0"
+                               max-results="10">
+                </auto-complete>
+            </tags-input>
+
+            <input class="btn btn-lg btn-danger btn-block" type="submit" value="Add Post" ng-click="addPost(newpost)" />
+
+        </form>
+    </div>
+</div>
