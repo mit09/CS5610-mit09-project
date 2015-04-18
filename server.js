@@ -428,9 +428,10 @@ app.delete("/user/:id", function (req, res) {
 
 app.post("/user", function (req, res) {
 
-    var hashEmail = sha1(req.body.email);
-    var emailToImgUrl = 'http://www.gravatar.com/avatar/' + hashEmail + '?d=identicon';
-
+    if(req.body.email!=null){
+        var hashEmail = sha1(req.body.email);
+        var emailToImgUrl = 'http://www.gravatar.com/avatar/' + hashEmail + '?d=identicon';
+    }
      
     var newUser = new UserModel({
         username: req.body.username,
