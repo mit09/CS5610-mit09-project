@@ -47,7 +47,7 @@ app.controller('adminController', function ($scope, $http) {
 
 
 
-    $scope.delete = function (id) {
+    $scope.deleteCarpool = function (id) {
         $http.delete('/carpool/' + id)
         .success(function (response) {
             $http.get("/carpool")

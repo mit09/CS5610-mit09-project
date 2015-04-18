@@ -85,7 +85,7 @@
                                 <td><span>{{carpool.createdAt | date:'short'}}</span></td>
                                 <!--<td><span>{{post.createdAt | date:'medium'}}</span></td>-->
                                 <td>
-                                    <button ng-click="delete(carpool._id)" class="btn btn-danger center-block" ng-disabled="!carpool || carpool.$invalid">
+                                    <button ng-click="deleteCarpool(carpool._id)" class="btn btn-danger center-block" ng-disabled="!carpool || carpool.$invalid">
                                         <span class="glyphicon glyphicon-remove"></span>
                                     </button>
                                 </td>
