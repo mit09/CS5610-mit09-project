@@ -1,0 +1,37 @@
+﻿<div class="container" ng-init="initialize()">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+           <p class="md-headline" style="text-align:center"><b>Welcome to Office</b></p>
+           <p class="md-title" style="text-align:center"><b>Checkout the post, carpools, comments by your colleagues</b></p>
+           <img style="width: 100%; height: 2px;" src="../../images/line.png" />
+           
+        </div>
+    </div>
+    <div class="row" id="homeDiv" ng-click="postonclick()">
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <img src="../../images/icons/ic_create_24px.svg" style="display: block; margin-left: auto; margin-right: auto; width: 240px" class="img-responsive rotate"/>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <p class="md-headline"><b>Posts</b></p>
+            <p class="md-title">Checkout the posts by your colleagues</p>
+            <p class="md-title" ng-show="currentUser">Add post, comments and enjoy</p>
+            <p class="md-title" ng-show="!currentUser">Please sign-up or login to add post, comments and enjoy</p>
+        </div>
+
+    </div>
+    <img style="width: 100%; height: 2px;" src="../../images/line.png" />
+
+    <div class="row" id="homeDiv" ng-click="carpoolonclick()">
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <img style="display: block; margin-left: auto; margin-right: auto; width:240px" class="img-responsive changeImg"  />
+
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <p class="md-headline"><b>Carpool</b></p>
+            <p class="md-title">Explore carpool by your colleagues</p>
+            <p class="md-title" ng-show="currentUser">Add carpool, comments and enjoy</p>
+            <p class="md-title" ng-show="!currentUser">Please sign-up or login to add carpool, comments and enjoy</p>
+            
+        </div>
+    </div>
+</div>

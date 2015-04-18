@@ -1,6 +1,6 @@
 ﻿var app = angular.module('ViewposttagApp', []);
 
-app.controller('viewposttagController', function ($scope, $http, $routeParams, UserService) {
+app.controller('viewposttagController', function ($scope, $http, $routeParams, $location, ToastService, UserService) {
     
     $scope.initialize = function () {
         
@@ -30,10 +30,14 @@ app.controller('viewposttagController', function ($scope, $http, $routeParams, U
         });
     }
 
+    $scope.cardOnClick = function (id) {
+        $location.url('/view/post/' + id);
+    }
+
     $scope.fav = function () {
         
         if (!UserService.getCurrentUser()) {
-                alert("Please login");
+            ToastService.showSimpleToast('Please login');
         } else {
             var currentUser = UserService.getCurrentUser();
             currentUser.favorite.push($routeParams.tagId);
@@ -49,7 +53,7 @@ app.controller('viewposttagController', function ($scope, $http, $routeParams, U
     $scope.unfav = function () {
 
         if (!UserService.getCurrentUser()) {
-            alert("Please login");
+            ToastService.showSimpleToast('Please login');
 
         } else {
             var currentUser = UserService.getCurrentUser();

@@ -1,0 +1,33 @@
+﻿<div ng-init="initialize()">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2">
+                <!--Sidebar content-->
+                Any: <input ng-model="query.$"> <br>
+                Sort By:
+                <button ng-show="!reverse" ng-click="setReverseTrue()">Newest first</button>
+                <button ng-show="reverse" ng-click="setReverseFalse()">Oldest first</button>
+
+
+
+            </div>
+            <div class="col-md-10">
+                <!--Body content-->
+                
+                <ul>
+                    <li ng-repeat="post in posts | filter:query | orderBy:orderByProperty:reverse">
+                            <p ng-show="post.isClose"><b>[[CLOSED]]</b></p>
+                            <a href="#/view/carpool/{{post._id}}">Carpool for {{post.destination}}</a>
+                            <p>From: {{post.source}}</p>
+                            <p>By:<a href="#/view/user/{{post.postedBy._id}}">{{post.postedBy.username}}</a></p>
+                            <button ng-show="post.postedBy._id === currentUser._id" ng-click="deletePost(post._id)">Delete</button>
+                            <p>---------------</p>
+                        
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</div>
+

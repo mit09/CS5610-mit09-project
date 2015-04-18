@@ -1,8 +1,52 @@
-﻿<div ng-init="initialize()">
-    <h2>{{tagDetails.hashtag}}</h2>
-    <button ng-hide="isFav" ng-click="fav()">Add to Favorite</button>
-    <button ng-show="isFav" ng-click="unfav()">Remove as Favorite</button>
-    <ul>
+﻿<div ng-init="initialize()" class="container">
+    <div>
+        <span class="md-display-1">#{{tagDetails.hashtag}}</span>
+        <button ng-hide="isFav" ng-click="fav()" class="btn btn-yellow pull-right">
+            <span class="glyphicon glyphicon-star"></span>
+            Add to Favorite
+        </button>
+        <button ng-show="isFav" ng-click="unfav()" class="btn pull-right">
+            <span class="glyphicon glyphicon-star-empty"></span>
+            Remove from Favorite
+        </button>
+    </div>
+
+    <img style="width: 100%; height: 2px;" src="../../images/line.png" />
+
+    <p style="text-align:center"class="md-title"><b>Posts with hashtag #{{tagDetails.hashtag}}</b></p>
+
+    <p id="noFollowerMsg" ng-show="posts.length === 0">
+        {{userProfile.username}} hasn't posted anything yet
+    </p>
+
+    <div class="row">
+
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <md-card ng-repeat="post in posts |  orderBy:orderByProperty:true">
+                <md-toolbar ng-click="cardOnClick(post._id)">
+                    <div class="md-toolbar-tools">
+                        <ng-md-icon icon="arrow_forward" style="fill:white"></ng-md-icon>
+                        <h3 class="md-toolbar-tools">{{post.title}}</h3>
+                    </div>
+                </md-toolbar>
+                <md-content>
+                    <div id="cardDiv">
+                        <p ng-click="cardOnClick(post._id)">{{post.content}}</p>
+                        <span ng-repeat="tag in post.tags">
+                            <a class="btn btn-purple" href="#/view/tag/{{tag._id}}">{{tag.hashtag}}</a>
+                        </span>
+                        <p ng-show="post.comments.length!=0" style="padding-top: 5px" class="md-caption">{{post.comments.length}} comments posted</p>
+                        <p ng-show="post.comments.length==0" style="padding-top: 5px" class="md-caption">Be the first to comment..</p>
+                    </div>
+                </md-content>
+                <md-card-footer>
+                    Posted on {{post.createdAt | date:'short'}} by <a href="#/view/user/{{post.postedBy._id}}" style="text-transform: capitalize;">{{post.postedBy.username}}</a>
+                </md-card-footer>
+            </md-card>
+        </div>
+    </div>
+
+    <!--<ul>
         <li ng-repeat="post in posts">
             Title:<a href="#/view/post/{{post._id}}">{{post.title}}</a>
             <p>Content:{{post.content}}</p>
@@ -18,4 +62,5 @@
         </li>
     </ul>
     <a href="#/view">View All</a>
+        -->
 </div>

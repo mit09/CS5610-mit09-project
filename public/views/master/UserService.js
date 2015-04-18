@@ -1,6 +1,6 @@
 var app = angular.module("UserServiceApp", []);
 
-app.factory('UserService', function () {
+app.factory('UserService', function ($rootScope) {
     
     var currentUser = null;
 
@@ -8,7 +8,7 @@ app.factory('UserService', function () {
         currentUser = user;
     }
 
-    var getCurrentUser = function(){
+    var getCurrentUser = function () {
         return currentUser;
     }
 

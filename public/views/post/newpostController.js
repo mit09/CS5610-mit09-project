@@ -1,6 +1,5 @@
-﻿var app = angular.module("NewpostApp", ['ngTagsInput']);
-
-app.controller("NewpostController", function ($scope, $http, UserService) {
+﻿var app = angular.module("NewpostApp", ['ngTagsInput','ngMaterial']);
+app.controller("NewpostController", function ($scope, $http, $location, $mdToast, $animate, ToastService, UserService) {
     
     /* GLOBAL VARIABLE */
     var allTags = []
@@ -43,19 +42,19 @@ app.controller("NewpostController", function ($scope, $http, UserService) {
     var getTagId = function (allTags, selectedTag) {
         var id;
         angular.forEach(allTags, function (tagDetails) {
-            console.log(tagDetails);
-            console.log(selectedTag);
+           // console.log(tagDetails);
+           // console.log(selectedTag);
             if (tagDetails.hashtag == selectedTag.text) {
                 id= tagDetails._id;
             }
         });
-        console.log(id);
+        //console.log(id);
         return id;
       }
     
     $scope.addPost = function (newpost) {
         
-
+        
         newpost.tags = [];
         
         angular.forEach($scope.selectedTags, function (selectedTag) {
@@ -68,9 +67,13 @@ app.controller("NewpostController", function ($scope, $http, UserService) {
         
         $http.post("/post", newpost)
         .success(function (response) {
-            alert("new post created");
+            ToastService.showSimpleToast('New post added');
             // later redirect to view page
+            $location.url('/view');
         });
-        
     }
+
+   
+
+    
 })

@@ -1,6 +1,6 @@
-﻿var app = angular.module('ViewpostApp', []);
+﻿var app = angular.module('ViewpostApp', ['ngMdIcons']);
 
-app.controller('ViewpostController', function ($scope, $http, UserService) {
+app.controller('ViewpostController', function ($scope, $http, $location, UserService) {
 
     $scope.initialize=function(){
         $scope.reverse = true;
@@ -16,7 +16,9 @@ app.controller('ViewpostController', function ($scope, $http, UserService) {
         $scope.reverse = false;
     }
    
-    
+    $scope.cardOnClick = function (id) {
+        $location.url('/view/post/'+id);
+    }
 
     var getPost = function () {
         $http.get('/post')

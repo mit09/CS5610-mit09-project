@@ -16,6 +16,9 @@ var mongoose = require('mongoose');
 var connectionString = process.env.OPENSHIFT_MONGODB_DB_URL || 'mongodb://localhost/project';
 mongoose.connect(connectionString);
 
+/*SHA-1*/
+var sha1 = require('sha1');
+
 /* TAG SCHEMA*/
 var tagSchema = new mongoose.Schema({
     hashtag: String,
@@ -23,6 +26,7 @@ var tagSchema = new mongoose.Schema({
 }, { collection: "tag" });
 
 var TagModel = mongoose.model("tag", tagSchema);
+
 
 /* FORUM SCHEMA*/
 var forumSchema = new mongoose.Schema({
@@ -39,7 +43,9 @@ var userSchema = new mongoose.Schema({
     creationDateTime: { type: Date, default: Date.now },
     following:[{ type: mongoose.Schema.Types.ObjectId, ref: 'user' }],
     follower: [{ type: mongoose.Schema.Types.ObjectId, ref: 'user' }],
-    favorite: [{ type: mongoose.Schema.Types.ObjectId, ref: 'tag' }]
+    favorite: [{ type: mongoose.Schema.Types.ObjectId, ref: 'tag' }],
+    email: String,
+    imgUrl: String
 }, { collection: "user" });
 
 var UserModel = mongoose.model("user", userSchema);
@@ -421,9 +427,16 @@ app.delete("/user/:id", function (req, res) {
 
 
 app.post("/user", function (req, res) {
+
+    var hashEmail = sha1(req.body.email);
+    var emailToImgUrl = 'http://www.gravatar.com/avatar/' + hashEmail + '?d=identicon';
+
+     
     var newUser = new UserModel({
         username: req.body.username,
-        password: req.body.password
+        password: req.body.password,
+        email: req.body.email,
+        imgUrl: emailToImgUrl
     })
 
     /*ASYNC 1: save*/
@@ -654,6 +667,7 @@ app.get('/carpool/:id', function (req, res) {
 });
 
 
+
 app.get('/carpool/detail/:id', function (req, res) {
     carpoolModel.findById(req.params.id).populate('postedBy').populate('comments').exec(function (err, data) {
         var options = {
@@ -668,6 +682,11 @@ app.get('/carpool/detail/:id', function (req, res) {
 });
 
 
+app.get('/carpool/user/:userId', function (req, res) {
+    carpoolModel.find({ postedBy: req.params.userId }).populate('postedBy').populate('comments').exec(function (err, carpoolData) {
+        res.json(carpoolData);
+    });
+});
 
 app.post('/carpool', function (req, res) {
 
@@ -678,7 +697,8 @@ app.post('/carpool', function (req, res) {
         cost: req.body.cost,
         type: req.body.type,
         numberOfPassenger: req.body.numberOfPassenger,
-        memo: req.body.memo
+        memo: req.body.memo,
+        date: req.body.date
     });
 
     newCarpool.save(function (err) {

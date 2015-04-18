@@ -3,14 +3,14 @@
 app.controller("UserController", function ($scope, $http) {
     $scope.selectedIndex = null;
 
-    $scope.get = function () {
+    $scope.getUser = function () {
         $http.get('/user')
         .success(function (response) {
             $scope.users = response
         });
     }
 
-    $scope.add = function (user) {
+    $scope.addUser = function (user) {
         $http.post("/user", user)
         .success(function (response) {
             $scope.users = response;
@@ -20,14 +20,14 @@ app.controller("UserController", function ($scope, $http) {
 
     
 
-    $scope.delete = function (id) {
+    $scope.deleteUser = function (id) {
         $http.delete('/user/' + id)
         .success(function (response) {
             $scope.users = response;
         });
     }
 
-    $scope.edit = function (id) {
+    $scope.editUser = function (id) {
         $http.get('/user/' + id)
         .success(function (response) {
             $scope.user = response;
@@ -35,7 +35,7 @@ app.controller("UserController", function ($scope, $http) {
         $scope.selectedIndex = id;
     }
 
-    $scope.update = function (user) {
+    $scope.updateUser = function (user) {
         $http.put('/user', $scope.user)
         .success(function (response) {
             $scope.users = response;
@@ -43,7 +43,7 @@ app.controller("UserController", function ($scope, $http) {
         $scope.clear();
     }
 
-    $scope.clear = function () {
+    $scope.clearUser = function () {
         $scope.user = null;
         $scope.selectedIndex = null;
     }

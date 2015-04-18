@@ -1,20 +1,19 @@
-﻿var app = angular.module("ViewIndividualCarpoolApp", []);
+﻿var app = angular.module("ViewIndividualCarpoolApp", ['ngMaterial']);
 
-app.controller("ViewIndividualCarpoolController", function ($scope, $http, $routeParams, $window, $location, $sce, UserService) {
+app.controller("ViewIndividualCarpoolController", function ($scope, $http, $routeParams, $window, $location, $sce,$mdDialog, ToastService, UserService) {
    
     var postWithoutDetail;
 
     $scope.load = function () {
         /* have access to $scope here*/
-        console.log("Hello");
+        //console.log("Hello");
     }
 
     $scope.initialize = function () {
         getpost();
         getpostWihtoutDetails();
         $scope.currentUser = UserService.getCurrentUser();
-        
-
+        $scope.defaultIcon = '../../images/icons/default.png';
     }
 
     var updateUrl = function () {
@@ -29,7 +28,6 @@ app.controller("ViewIndividualCarpoolController", function ($scope, $http, $rout
             postWithoutDetail = response;
             
         });
-
     }
 
     var getpost =function(){
@@ -42,29 +40,27 @@ app.controller("ViewIndividualCarpoolController", function ($scope, $http, $rout
                 $scope.post = response;
                 updateUrl();
             }
-            
         });
-
     }
 
-    $scope.deletePost = function () {
+    var deletePost = function () {
         $http.delete('/carpool/' + $routeParams.postId)
         .success(function (response) {
             $location.url('/view/carpool')
-            alert('carpool deleted')
+            //alert('carpool deleted')
         });
     }
 
-    $scope.close = function () {
+    var close = function () {
         postWithoutDetail.isClose = true;
         $http.put('/carpool/one', postWithoutDetail)
         .success(function (response_inner) {
             $location.url('/view/carpool')
-            alert('carpool closed')
+            //alert('carpool closed')
         });
     }
-    $scope.addComment = function (newcomment) {
 
+    $scope.addComment = function (newcomment) {
         newcomment.commentedBy = UserService.getCurrentUser()._id;
 
         $http.post('/comment', newcomment)
@@ -78,4 +74,51 @@ app.controller("ViewIndividualCarpoolController", function ($scope, $http, $rout
             });
         });
     }
+
+    $scope.confimDelete = function (ev, id) {
+        // Appending dialog to document.body to cover sidenav in docs app
+        var confirm = $mdDialog.confirm()
+          .parent(angular.element(document.body))
+          .title('Would you like to delete this carpool?')
+          .content('There is no way to recover deleted carpool posts')
+          .ariaLabel('Lucky day')
+          .ok('Yes')
+          .cancel('No')
+          .targetEvent(ev);
+        $mdDialog.show(confirm).then(function () {
+            deletePost(id);
+            ToastService.showSimpleToast('Carpool post deleted');
+        }, function () {
+            ToastService.showSimpleToast('You have retained this carpool post!');
+        });
+    };
+
+    $scope.confimClose = function (ev) {
+        // Appending dialog to document.body to cover sidenav in docs app
+        var confirm = $mdDialog.confirm()
+          .parent(angular.element(document.body))
+          .title('Is the carpool full?')
+          .content('')
+          .ariaLabel('Lucky day')
+          .ok('Yes')
+          .cancel('No')
+          .targetEvent(ev);
+        $mdDialog.show(confirm).then(function () {
+            close();
+            ToastService.showSimpleToast('Carpool is full');
+        }, function () {
+            ToastService.showSimpleToast('This carpool is still open!');
+        });
+    };
 });
+
+var counter = 0;
+function abc() {
+    counter++
+    
+    if (counter == 2) {
+        document.getElementById('diVLoad').style.display = 'none';
+        counter = 0;
+    }
+    
+}

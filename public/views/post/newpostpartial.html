@@ -1,25 +1,20 @@
 ﻿<div ng-init="initialize()">
     <div class="container">
 
-        <h1>Share a new post..</h1>
+        <h1 class="md-display-1">Share a new post..</h1>
 
-        <form class="add-post">
-            
+        <form class="add-post" name="postForm">
+
             <label for="title" class="sr-only">Title </label>
-            <input id="title" class="form-control"  ng-model="newpost.title" placeholder="Post title" autofocus required />
+            <input required id="title" class="form-control" ng-model="newpost.title" placeholder="Title" autofocus ng-required="true" />
             <br />
-
-            <label for="username" class="sr-only">Username</label>
-            <span class="form-control" style="background-color:lightgrey">{{currentUser.username}}</span>
-            <br />
-
             <label for="post" class="sr-only">Content </label>
-            <textarea id="post" class="form-control" ng-model="newpost.content" placeholder="Write a post"></textarea>
+            <textarea required id="post" class="form-control" ng-model="newpost.content" placeholder="Write a post" ng-required="true"></textarea>
             <br />
 
             <tags-input class="bootstrap"
                         ng-model="selectedTags"
-                        placeholder="Add a tag"
+                        placeholder="Add hashtags"
                         replace-spaces-with-dashes="false">
                 <auto-complete source="loadTags($query)"
                                min-length="0"
@@ -27,8 +22,8 @@
                                max-results="10">
                 </auto-complete>
             </tags-input>
-
-            <input class="btn btn-lg btn-danger btn-block" type="submit" value="Add Post" ng-click="addPost(newpost)" />
+            <br />
+            <button ng-disabled="!currentUser" class="btn btn-lg btn-success btn-block" ng-click="postForm.$valid && addPost(newpost)">Add New Post</button>
 
         </form>
     </div>

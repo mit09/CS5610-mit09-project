@@ -1,1 +1,117 @@
-﻿
+﻿#noFollowerMsg{
+    font-style: italic;
+    font-family: 'Palatino Linotype'
+}
+
+#cardDiv{
+    padding:8px;
+}
+
+.btn-purple {
+
+    border-color: #9b59b6;
+    color: black;
+    background: #FAE6F5;
+}
+
+.btn-purple:hover {
+    background: #8e44ad;
+    border-color: #8e44ad;
+    color:white;
+}
+
+.btn-red-hallow{
+    border-color:#CC0000;
+    background:#FFB2B2
+}
+
+
+
+.btn-red-hallow:hover {
+    background: #CC0000;
+    color:white;
+}
+
+.btn-blue-hallow{
+    border-color:#0099FF;
+    background:#E6F5FF;
+}
+
+.btn-blue-hallow:hover {
+    background: #0099FF;
+    color:white;
+}
+
+
+md-card-footer{
+    padding-bottom: 1px;
+    background-color: lightgrey;
+}
+
+.btn-hollow{
+    border-color: white;
+    color: black;
+    background: white;
+}
+
+.btn-hollow:hover{
+    border-color: white;
+    color: green;
+    background: white;
+}
+
+
+.btn-green-onhover-hollow{
+    border-color: white;
+    color: black;
+    background: white;
+}
+
+.btn-green-onhover-hollow:hover{
+    border-color: white;
+    color: #00E600;
+    background: white;
+}
+
+
+.btn-yellow {
+    border-color: #fffc00;
+    color: black;
+    background: #fffc00;
+}
+
+.face {
+  border-radius: 30px;
+  border: 1px solid #ddd;
+  width: 48px;
+  margin: 16px; 
+}
+
+.textarea-only-vertical-resize {
+    resize: vertical;   
+}
+
+#homeDiv:hover{
+    background-color:lightgray;
+    color:green;
+}
+
+#homeDiv:hover .changeImg{
+    content:url('../../images/icons/cp2.svg');
+}
+
+#homeDiv:hover .rotate{
+    -webkit-transform: rotate(20deg);
+    transform: rotate(20deg);
+}
+
+.rotate {
+  border-radius: 50%;
+  -webkit-transition: -webkit-transform .5s ease-in-out;
+  transition: transform .5s ease-in-out;
+}
+
+.changeImg{    
+    content:url('../../images/icons/ic_directions_car_24px.svg');
+}
+

@@ -1,0 +1,212 @@
+﻿<div class="container" ng-init="initialize()">
+    
+    <div class="row">
+        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+            <img ng-src="{{userProfile.imgUrl || defaultIcon}}" class="face">
+            <span style="text-transform: capitalize;" class="md-display-1">{{userProfile.username}}</span>
+        </div>
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" ng-show="!isUserProfileCurrentUser">
+            <button ng-hide="isFollowing" ng-click="follow(userWithoutDetail)" class="btn btn-blue-hallow pull-right">
+                <span class="glyphicon glyphicon-user"></span>
+                Follow
+            </button>
+            
+            <button ng-show="isFollowing" ng-click="unfollow()" class="btn btn-red-hallow pull-right">
+                <span class="glyphicon glyphicon-remove"></span>
+                Unfollow
+            </button>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+            <span class="glyphicon glyphicon-time"></span>
+            <span class="md-body-1">Joined on {{userProfile.creationDateTime | date:'mediumDate'}}</span>
+        </div>
+    </div>
+    <hr />
+        <p class="md-title">
+            Followers
+            <span class="badge" style="font-size: 16px; background-color: #0099FF;">{{userProfile.follower.length}}</span>
+        </p>
+        <p id="noFollowerMsg" ng-show="userProfile.follower.length == 0">
+            Currently, {{userProfile.username}} has no followers.. Wanna follow {{userProfile.username}} click on the button above.  
+        </p>
+        <div class="row">
+            <div class="col-xs-6 col-sm-4 col-md-2 col-lg-2" ng-repeat="f in userProfile.follower">
+                <div class="thumbnail" ng-click="userclick(f._id)">
+                    <img ng-src="{{f.imgUrl || defaultIcon}}" />
+                    <div class="caption">
+                        <p style="text-transform: capitalize;"><a href="#/view/user/{{f._id}}">{{f.username}}</a></p>
+                        <p ng-show="currentUser._id==f._id"><br /></p>
+                        <button ng-click="follow(f)" ng-show="currentUser._id!=f._id && currentUser.following.indexOf(f._id)==-1" class="btn btn-blue-hallow">
+                            <span class="glyphicon glyphicon-user"></span>
+                            Follow
+                        </button>
+                        <button ng-show="currentUser && currentUser.following.indexOf(f._id)!=-1" class="btn btn-primary" disabled>
+                            <span class="glyphicon glyphicon-user"></span>
+                            Following
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--
+        <ul>
+            Following
+            ({{userProfile.following.length}})
+            <li ng-repeat="f in userProfile.following">
+                <a href="#/view/user/{{f._id}}">{{f.username}}</a>
+
+            </li>
+        </ul>
+        -->
+    
+
+        <p class="md-title">
+            Following
+            <span class="badge" style="font-size: 16px; background-color: #0099FF;">{{userProfile.following.length}}</span>
+        </p>
+        <p id="noFollowerMsg" ng-show="userProfile.following.length == 0">
+            Currently, {{userProfile.username}} isn't following anyone.
+        </p>
+        <div class="row">
+            <div class="col-xs-6 col-sm-4 col-md-2 col-lg-2" ng-repeat="f in userProfile.following">
+                <div class="thumbnail" ng-click="userclick(f._id)">
+                    <img ng-src="{{f.imgUrl || defaultIcon}}" />
+                    <div class="caption">
+                        <p style="text-transform: capitalize;"><a href="#/view/user/{{f._id}}">{{f.username}}</a></p>
+                        
+                        <p ng-show="isUserProfileCurrentUser || currentUser._id==f._id"><br /></p>
+                        <button ng-click="follow(f)" ng-show="!isUserProfileCurrentUser && currentUser._id!=f._id && currentUser.following.indexOf(f._id)==-1" class="btn btn-blue-hallow">
+                            <span class="glyphicon glyphicon-user"></span>
+                            Follow
+                        </button>
+                        <button ng-show="!isUserProfileCurrentUser && currentUser && currentUser.following.indexOf(f._id)!=-1" class="btn btn-primary" disabled>
+                            <span class="glyphicon glyphicon-user"></span>
+                            Following
+                        </button>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <p class="md-title">
+                Favorite Tags <span class="badge" style="font-size: 16px; background-color: #fffc00;">{{userProfile.favorite.length}}</span>
+            </p>
+            <p id="noFollowerMsg" ng-show="userProfile.favorite.length == 0">
+                Currently, {{userProfile.username}} has no favorites!
+            </p>
+            
+            <div>
+                <span ng-repeat="f in userProfile.favorite">
+                    <a class="btn btn-purple" href="#/view/tag/{{f._id}}">{{f.hashtag}}</a>
+                </span>
+            </div>
+        </div>
+        <hr />
+
+    <p class="md-title">
+        Posts by <span style="text-transform: capitalize">{{userProfile.username}}</span>
+    </p>
+    <p id="noFollowerMsg" ng-show="posts.length === 0">
+        {{userProfile.username}} hasn't posted anything yet
+    </p>
+    
+    <div class="row">
+        
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <md-card ng-repeat="post in posts |  orderBy:orderByProperty:true">
+                <md-toolbar ng-click="postCardOnClick(post._id)">
+                    <div class="md-toolbar-tools">
+                        <ng-md-icon icon="arrow_forward" style="fill:white"></ng-md-icon>
+                        <h3 class="md-toolbar-tools">{{post.title}}</h3>
+                    </div>
+                </md-toolbar>
+                <md-content>
+                    <div id="cardDiv">
+                        <p ng-click="cardOnClick(post._id)">{{post.content}}</p>
+                        
+                        <span ng-repeat="tag in post.tags">
+                            <a class="btn btn-purple" href="#/view/tag/{{tag._id}}">{{tag.hashtag}}</a>
+                        </span>
+                        <p ng-show="post.comments.length!=0" style="padding-top: 5px" class="md-caption">{{post.comments.length}} comments posted</p>
+                        <p ng-show="post.comments.length==0" style="padding-top: 5px" class="md-caption">Be the first to comment..</p>
+                    </div>
+                </md-content>
+                <md-card-footer>
+                    Posted on {{post.createdAt | date:'short'}} by <a href="#/view/user/{{post.postedBy._id}}" style="text-transform: capitalize;">{{post.postedBy.username}}</a>
+                </md-card-footer>
+            </md-card>
+        </div>
+    </div>
+    <br />
+    <p class="md-title">
+        Carpool Posts by <span style="text-transform: capitalize">{{userProfile.username}}</span>
+    </p>
+    <p id="noFollowerMsg" ng-show="posts.length === 0">
+        {{userProfile.username}} hasn't posted any carpool yet
+    </p>
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+            <md-card ng-repeat="post in carpoolposts | orderBy:orderByProperty:true">
+                <md-toolbar ng-click="postCarpoolCardOnClick(post._id)">
+                    <div class="md-toolbar-tools">
+                        <ng-md-icon icon="arrow_forward" style="fill:white"></ng-md-icon>
+                        <h3 class="md-toolbar-tools">Carpool for {{post.destination}}</h3>
+                    </div>
+                </md-toolbar>
+                <md-content>
+                    <div id="cardDiv" ng-click="postCarpoolCardOnClick(post._id)">
+                        <p ng-show="post.isClose" style="text-align:center;font-size:large">
+                            <span class="label label-danger">Carpool is full</span>
+                        </p>
+                        <p><b>Pick-up:</b> {{post.source}}</p>
+                        <p><b>Drop-off:</b> {{post.destination}}</p>
+                        <p class="md-subhead">
+                            <span class="glyphicon glyphicon-time"></span>
+                            {{post.date | date:'fullDate' }} at {{post.date | date:'shortTime' }}
+                        </p>
+                        <p class="md-title" style="color:#4CAF50">
+                            <span ng-show="post.cost===0"><b>Free</b></span>
+                            <span ng-hide="post.cost===0"><b>${{post.cost}}</b></span>
+
+                            <img class="pull-right" ng-repeat="n in []| range: post.numberOfPassenger" src="../../images/icons/ic_person_24px.svg" style="width:24px;height:24px" />
+                        </p>
+
+                        <p ng-show="post.comments.length!=0" style="padding-top: 5px" class="md-caption">{{post.comments.length}} comments posted</p>
+                        <p ng-show="post.comments.length==0" style="padding-top: 5px" class="md-caption">Be the first to comment..</p>
+                    </div>
+                </md-content>
+                <md-card-footer>
+                    Posted on {{post.createdAt | date:'short'}} by <a href="#/view/user/{{post.postedBy._id}}" style="text-transform: capitalize;">{{post.postedBy.username}}</a>
+                </md-card-footer>
+            </md-card>
+        </div>
+    </div>
+        <!--<div>
+            <p>Recent Posts:</p>
+            <ul>
+                <li ng-repeat="post in posts">
+                    Title:<a href="#/view/post/{{post._id}}">{{post.title}}</a>
+                    <p>Content:{{post.content}}</p>
+                    <p>PostedBy:{{post.postedBy.username}}</p>
+                    <p>Tags:</p>
+                    <ol>
+                        <li ng-repeat="tag in post.tags">
+                            <a href="#/view/tag/{{tag._id}}">{{tag.hashtag}}</a>
+                        </li>
+                    </ol>
+                    <p>---------------</p>
+
+                </li>
+            </ul>
+        </div>
+            -->
+
+    </div>

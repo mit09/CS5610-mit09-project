@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Admin :: Carpool Manager</title>
+
+    <script src="../../../javascript/jquery/jquery-1.11.2.min.js"></script>
+    <script src="../../../javascript/bootstrap/bootstrap.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../../css/bootstrap/bootstrap.min.css" />
+
+    <script src="../../../javascript/angular/angular.min.js"></script>
+    <script src="../../../javascript/angular/angular-route.min.js"></script>
+
+    <script src="CarpoolController.js"></script>
+    
+</head>
+<body ng-app="CarpoolApp">
+    <div class="container">
+        <h1 class="text-center">Carpool Manager</h1>
+        <p style="color:red; text-align:center">Admin cannot add or update carpool post unlike other posts as source and destination can be an invalid address. Admin can delete posts.</p>
+        <div ng-controller="CarpoolController" ng-init="get()">
+            <table class="table table-responsive">
+
+                <colgroup>
+                    <col style="width:10%" />
+                    <col style="width:20%" />
+                    <col style="width:20%" />
+                    <col style="width:10%" />
+                    <col style="width:10%" />
+                    <col style="width:10%" />
+                    <col style="width:10%" />
+                    <col style="width:10%" />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <td><h3>User Name</h3></td>
+                        <td><h3>Source</h3></td>
+                        <td><h3>Destination</h3></td>
+                        <td><h3>Date</h3></td>
+                        <td><h3>Cost</h3></td>
+                        <td><h3>Number Of Passenger</h3></td>
+                        <td><h3>Memo</h3></td>
+                        <td><h3>Creation Time</h3></td>
+                    </tr>
+                </thead>
+                <tbody>
+                       <!--
+                           var carpoolSchema = new mongoose.Schema({
+    postedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'user' },
+    createdAt: { type: Date, default: Date.now },
+    lastEditedAt: { type: Date, default: Date.now },
+    source: String,
+    destination: String,
+    cost: Number,
+    date: Date,
+    type: String,
+    numberOfPassenger: Number,
+    numberOfAvailable: Number,
+    memo: String,
+    comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'comment' }],
+    isClose: {type: Boolean, default: false}
+}, { collection: "carpool" });
+                       -->
+                    
+                    <tr ng-repeat="carpool in carpools">
+                        <td>{{carpool.postedBy.username}}</td>
+                        <td>{{carpool.source}}</td>
+                        <td>{{carpool.destination}}</td>
+                        <td><span>{{carpool.date | date:'medium'}}</span></td>
+                        <td>{{carpool.cost}}</td>
+                        <td>{{carpool.numberOfPassenger}}</td>
+                        <td>{{carpool.memo}}</td>
+                        <td><span>{{carpool.createdAt | date:'short'}}</span></td>
+                        <!--<td><span>{{post.createdAt | date:'medium'}}</span></td>-->
+                        <td>
+                            <button ng-click="delete(carpool._id)" class="btn btn-danger center-block" ng-disabled="!carpool || carpool.$invalid">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                        </td>
+                        <!--
+                        <td>
+                            <button ng-click="edit(carpool)" class="btn btn-warning center-block" ng-disabled="!carpool || carpool.$invalid">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </button>
+                        </td>-->
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

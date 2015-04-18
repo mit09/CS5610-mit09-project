@@ -1,4 +1,4 @@
-﻿var app = angular.module("NewCarppolApp", []);
+﻿var app = angular.module("NewCarppolApp", ['ui.bootstrap', 'ui.bootstrap.datetimepicker']);
 
 
 app.directive('googleplace', function () {
@@ -21,12 +21,13 @@ app.directive('googleplace', function () {
     };
 });
 
-app.controller("newCarpoolController", function ($scope, $http, $sce, $location, UserService) {
+app.controller("newCarpoolController", function ($scope, $http, $sce, $location, ToastService, UserService) {
    
     $scope.numberOfPassengers = 1;
 
     $scope.initalize = function () {
         $scope.currentUser = UserService.getCurrentUser();
+        initializationForDateTimePicker();
     }
     
     $scope.updateUrl = function () {
@@ -36,18 +37,31 @@ app.controller("newCarpoolController", function ($scope, $http, $sce, $location,
     }
 
     $scope.addCarpool = function (carpool) {
-
+        
         if (!UserService.getCurrentUser()) {
-            alert("Please login");
-
+            ToastService.showSimpleToast("Please login");
         } else {
             carpool.postedBy = UserService.getCurrentUser()._id;
+            carpool.date = $scope.seletedDate;
+            
             $http.post("/carpool", carpool)
             .success(function (response) {
-                alert("added carpool");
+                ToastService.showSimpleToast('New carpool added');
                 $location.url('/view/carpool')
                 // later redirect to view page
             });
         }
     }
+
+    var initializationForDateTimePicker = function () {
+        $scope.seletedDate = new Date();
+        $scope.minDate = new Date();
+        $scope.maxDate = new Date();
+        $scope.maxDate.setFullYear($scope.minDate.getFullYear() + 1);
+        $scope.hourStep = 1;
+        $scope.minuteStep = 10;
+        $scope.showMeridian = true;
+        $scope.showWeeks = false;
+
+    };
 });

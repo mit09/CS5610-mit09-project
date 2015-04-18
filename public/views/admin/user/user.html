@@ -49,15 +49,15 @@
                             <span class="form-control" style="background-color:lightgrey" ng-show="selectedIndex||selectedIndex==0">{{user.creationDateTime | date:'medium'}}</span>
                         </td>
                         <td>
-                            <button class="btn btn-info" ng-click="clear()" ng-show="user.username">
+                            <button class="btn btn-info" ng-click="clearUser()" ng-show="user.username">
                                 <span class="glyphicon glyphicon-repeat"></span> Clear
                             </button>
                         </td>
                         <td>
-                            <button class="btn btn-success" ng-click="add(user)" ng-show="! (selectedIndex || selectedIndex==0)" ng-disabled="!user || user.$invalid">
+                            <button class="btn btn-success" ng-click="addUser(user)" ng-show="! (selectedIndex || selectedIndex==0)" ng-disabled="!user || user.$invalid">
                                 <span class="glyphicon glyphicon-ok-sign"></span> Add User
                             </button>
-                            <button class="btn btn-warning" ng-click="update(user)" ng-show="selectedIndex||selectedIndex==0">
+                            <button class="btn btn-warning" ng-click="updateUser(user)" ng-show="selectedIndex||selectedIndex==0">
                                 <span class="glyphicon glyphicon-upload"></span> Update User
                             </button>
                         </td>
@@ -67,12 +67,12 @@
                         <td>{{user.password}}</td>
                         <td><span>{{user.creationDateTime | date:'medium'}}</span></td>
                         <td>
-                            <button ng-click="delete(user._id)" class="btn btn-danger center-block">
+                            <button ng-click="deleteUser(user._id)" class="btn btn-danger center-block">
                                 <span class="glyphicon glyphicon-remove"></span>
                             </button>
                         </td>
                         <td>
-                            <button ng-click="edit(user._id)" class="btn btn-warning center-block">
+                            <button ng-click="editUser(user._id)" class="btn btn-warning center-block">
                                 <span class="glyphicon glyphicon-pencil"></span>
                             </button>
                         </td>

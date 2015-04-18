@@ -18,14 +18,14 @@ app.controller("TagController", function ($scope, $http) {
         });
     }
 
-    $scope.delete = function (id) {
+    $scope.deleteTag = function (id) {
         $http.delete('/tags/' + id)
         .success(function (response) {
             $scope.tags = response;
         });
     }
 
-    $scope.edit = function (id) {
+    $scope.editTag = function (id) {
         $http.get('/tags/'+ id)
         .success(function(response){
             $scope.tag = response;
@@ -41,7 +41,7 @@ app.controller("TagController", function ($scope, $http) {
         $scope.clear();
     }
 
-    $scope.clear = function () {
+    $scope.clearTag = function () {
         $scope.tag = null;
         $scope.selectedIndex = null;
     }
